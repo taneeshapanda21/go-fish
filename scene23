@@ -1,0 +1,14 @@
+const s3 = (p) => {
+
+p.setup = () => {
+    const c = p.createCanvas(windowWidth,windowHeight);
+    c.parent('scene23');
+}
+
+p.draw = () => {
+    p.background(220,200,200);
+}
+
+};
+    
+new p5(s3);
