@@ -67,11 +67,4 @@ body {
   .controls input[type="range"] {
     max-width: 180px;
   }
-
-  #inventory-panel {
-    right: 8px;
-    bottom: 60px;
-    min-width: 140px;
-    padding: 10px 12px;
-  }
 }
