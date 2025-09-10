@@ -6,7 +6,7 @@ const s2 = (p) => {
     let toppled = false;
     let spilledDrops = [];
 
-    p.preload = function() {
+    p.preload = () => {
     sky = loadImage('assets/sky.jpg');
     glass = loadImage('assets/glass.jpg');
     }
@@ -55,4 +55,5 @@ const s2 = (p) => {
     }
     };
     
+
 new p5(s2);
