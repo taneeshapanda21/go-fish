@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Scene 2</title>
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- p5.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
+
+    <script src="scene2.js" defer></script>
+    <script src="scene22.js" defer></script>
+    <script src="scene23.js" defer></script>
+  </head>
+
+  <body>
+    <div id="scene2"></div>
+    <div id="scene22"></div>
+    <div id="scene23"></div>
+
+    <div class="controls">
+      <button id="prev-scene">Back to Previous Scene</button>
+    </div>
+
+    <script>
+      document.getElementById('prev-scene').addEventListener('click', () => {
+        window.location.href = 'index.html';
+      });
+    </script>
+  </body>
+</html>
