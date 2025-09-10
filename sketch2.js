@@ -2,7 +2,7 @@ const s2 = (p) => {
   
     let spacing = 15; let ray; let fish; let jelly; let buffer;
     
-    p.preload = function() {
+    p.preload = () => {
       ray=loadImage('assets/ray.jpg');
       fish=loadImage('assets/fish.jpg');
       jelly=loadImage('assets/jelly.jpg');
