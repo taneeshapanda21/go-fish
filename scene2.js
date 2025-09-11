@@ -67,7 +67,7 @@ p.draw = () => {
 
     // remove the particle from the array if it's finished
     if (fishes[i].isFinished()) {
-      fishes.p.splice(i, 1);
+      fishes.splice(i, 1);
     }
   }
 }
