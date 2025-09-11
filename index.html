@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Go Fish</title>
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- p5.js core + p5.sound for audio -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
+
+    <script src="sketch.js" defer></script>
+    <script src="sketch2.js" defer></script>
+    <script src="scene2.js" defer></script>
+    <script src="scene23.js" defer></script>
+    <script src="scene22.js" defer></script>
+
+  </head>
+
+  <body>
+       
+ <!-- ADD: controls (button + volume slider) -->
+ <div class="controls">
+  <button id="toggle-sound">▶️</button>
+  <label>volume:
+    <input id="vol" type="range" min="0" max="1" step="0.01" value="0.5" />
+    <span id="volVal">0.50</span>
+  </label></div>
+
+  <!-- <h1>Web Narratives</h1> -->
+    <div id="sketch"></div>
+    <div id="scene23"></div>
+    <div id="sketch2"></div>
+    <div style="height: 5vh"></div>
+    <p>keep on swimming</p>
+    <div id="scene22"></div>
+    <div id="scene2"></div>
+    
+    <div style="height: 10vh"></div>
+    <p>you made it. drink some water!</p>
+    
+    <div style="height: 10vh"></div>
+ 
+  
+  </body>
+
+</html>
