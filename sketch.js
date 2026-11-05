@@ -112,7 +112,7 @@ function draw() {
       endShape();
     pop();
   }
-  baseT += 0.008 * (trebleSize / 25);
+  baseT += 0.002 * (trebleSize / 25);
   
   // moon
   fill(237, 251, 255,200);

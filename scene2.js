@@ -19,19 +19,19 @@ class Particle {
   constructor() {
     this.x = p.random(0, p.width / 4);
     this.y = p.random(0, p.height);
-    this.vx = p.random(4, 7); // random velocity
-    this.alpha = 255; // opacity
+    this.vx = p.random(4, 7);
+    this.alpha = 255;
     
     if (p.random(1) < 0.9) {
-      this.c = p.color(colors[0]); // mostly color1
+      this.c = p.color(colors[0]);
     } else {
-      this.c = p.color(colors[1]); // rare color2
+      this.c = p.color(colors[1]);
     }
   }
   update() {
     this.vx -= 0.01
     this.x += this.vx;
-    this.alpha -= 1; // fade out 
+    this.alpha -= 1;
   }
 
   show() {
@@ -42,8 +42,6 @@ class Particle {
 
     // body
     p.ellipse(0, 0, 200,50);
-                // 60, 30
-    // tail (triangle)
     p.triangle(-100, 0, -130, -25, -130, 25);
 
     p.pop();
@@ -63,8 +61,8 @@ p.draw = () => {
   
   // loop through each particle in reverse order
   for (let i = fishes.length - 1; i >= 0; i--) {
-    fishes[i].update(); // update the particle's position
-    fishes[i].show(); // display the particle
+    fishes[i].update();
+    fishes[i].show();
 
     // remove the particle from the array if it's finished
     if (fishes[i].isFinished()) {
