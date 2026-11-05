@@ -1,11 +1,12 @@
 const s4 = (p) => {
-
+    // Glass
     let glass;
     let sky;
     let angle = 0;
     let toppled = false;
     let spilledDrops = [];
-    let colors = ["#00fff3","#ff3300"]
+    let colors = ["#8dacdb","#0a0e16"]
+    let scene;
 
     p.preload = () => {
     sky = p.loadImage('assets/sky.jpg');
@@ -13,51 +14,56 @@ const s4 = (p) => {
     }
 
     p.setup = () => {
-    const c = p.createCanvas(windowWidth,windowHeight);
+    const c = p.createCanvas(p.windowWidth, p.windowHeight);
     c.parent('scene22');
-    p.imageMode(CENTER);
+    scene = document.getElementById('scene22').closest('.scene');
+    p.imageMode(p.CENTER);
 
     }
 
     p.draw = () => {
-        
+
         p.background(255);
         p.push();
-        p.translate(width/2, height/2);
+        if (toppled && angle < p.HALF_PI) {
+            angle = Math.min(angle + 0.02, p.HALF_PI);
+        }
+
+        p.translate(p.width / 2, p.height / 2);
         p.rotate(angle);
         p.image(glass, 0, 0, 400,400);
         p.pop();
 
-        if (angle >= HALF_PI) {
-            if (frameCount % 10 === 0) {
+        if (angle >= p.HALF_PI) {
+            if (p.frameCount % 10 === 0) {
             spilledDrops.push({
-                x: width/2 + 190, // position to the "mouth" of the glass
-                y: height/2,
-                vy: random(2, 5), // random fall speed
-                r: random(5, 10)  // radius
+                x: p.width / 2 + 190,
+                y: p.height / 2,
+                vx: p.random(2, 5),
+                vy: p.random(-0.5, 0.5),
+                r: p.random(5, 10)
             });
             }
         }
         p.noStroke();
         if (p.random(1) < 0.9) {
-        p.fill(color(colors[0])); // mostly color1
+        p.fill(p.color(colors[0]));
         } else {
-        p.fill(color(colors[1])); // rare color2
+        p.fill(p.color(colors[1]));
         }
         for (let d of spilledDrops) {
             p.ellipse(d.x, d.y, d.r);
+            d.x += d.vx;
             d.y += d.vy;
-            d.vy += 0.1; // gravity
         }
-        spilledDrops = spilledDrops.filter(d => d.y < height + 20);
+        spilledDrops = spilledDrops.filter(d => d.x < p.width + 20);
         }
 
     p.mousePressed = () => {
-        toppled = true;
-        if (toppled && angle < HALF_PI) {
-            angle += 0.1;
+        if (scene.classList.contains('is-active')) {
+            toppled = true;
         }
     }
     };
-    
+
 new p5(s4);

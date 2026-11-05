@@ -1,4 +1,4 @@
-
+// Main
 let sound; 
 let fft; let rows = 5; let waveMaxHeight = 150; let baseT = 0; let t=0;
 let night = false;
@@ -11,35 +11,26 @@ let scrollPos = 0;
 
 
 function preload() {
-  sound = loadSound("assets/cler.mp3");
+  sound = loadSound("assets/bygone.m4a");
 }
 
 function setup() {
   const c = createCanvas(windowWidth, windowHeight);
   c.parent('sketch');
+  textFont('Nunito');
   fft = new p5.FFT();
 
-  // ADD: volume slider hookup
-const vol = document.getElementById('vol');
-const volVal = document.getElementById('volVal');
-sound.setVolume(parseFloat(vol.value));
-volVal.textContent = parseFloat(vol.value).toFixed(2);
-
-vol.addEventListener('input', () => {
-const v = parseFloat(vol.value);
-sound.setVolume(v);
-volVal.textContent = v.toFixed(2);
-});
-
-// ADD: play/stop button
-document.getElementById('toggle-sound').addEventListener('click', () => {
-if (!sound.isPlaying()) {
-sound.play();
-sound.setLoop(true);
-} else {
-sound.stop();
-}
-});
+  const soundButton = document.getElementById('toggle-sound');
+  soundButton.addEventListener('click', () => {
+    if (!sound.isPlaying()) {
+      sound.play();
+      sound.setLoop(true);
+      soundButton.setAttribute('aria-label', 'Pause sound');
+    } else {
+      sound.stop();
+      soundButton.setAttribute('aria-label', 'Play sound');
+    }
+  });
 
 window.addEventListener('scroll', () => {
     scrollPos = window.scrollY;
@@ -60,17 +51,17 @@ if (prevBtn) {
 
 function draw() {
   if (night) {
-    background(25, 76, 102);
+    background(32, 41, 46);
   } else {
-    background(237, 127, 43);
+    background(130, 158, 200);
   }
 
   strokeWeight(20);
   textSize(40);
-  fill(25, 76, 102)
+  fill(32, 41, 46)
   text(currentWork,width/4,height/5);
   
-  fill(237, 127, 43)
+  fill(130, 158, 200)
   text(currentWord,width/1.4,height/1.2);
 
   // clouds

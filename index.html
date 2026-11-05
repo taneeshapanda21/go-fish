@@ -4,6 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Go Fish</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
 
     <!-- p5.js core + p5.sound for audio -->
@@ -15,34 +18,71 @@
     <script src="scene2.js" defer></script>
     <script src="scene23.js" defer></script>
     <script src="scene22.js" defer></script>
-
   </head>
 
   <body>
-       
- <!-- ADD: controls (button + volume slider) -->
- <div class="controls">
-  <button id="toggle-sound">▶️</button>
-  <label>volume:
-    <input id="vol" type="range" min="0" max="1" step="0.01" value="0.5" />
-    <span id="volVal">0.50</span>
-  </label></div>
+    <div class="controls">
+      <button id="toggle-sound" type="button" aria-label="Play sound">♪</button>
+    </div>
 
-  <!-- <h1>Web Narratives</h1> -->
-    <div id="sketch"></div>
-    <div id="scene23"></div>
-    <div id="sketch2"></div>
-    <div style="height: 5vh"></div>
-    <p>keep on swimming</p>
-    <div id="scene22"></div>
-    <div id="scene2"></div>
-    
-    <div style="height: 10vh"></div>
-    <p>you made it. drink some water!</p>
-    
-    <div style="height: 10vh"></div>
- 
-  
+    <main id="scenes" aria-label="Go Fish scenes">
+      <section class="scene is-active" aria-label="Open water" aria-hidden="false">
+        <div id="sketch"></div>
+      </section>
+      <section class="scene" aria-label="Blue grid" aria-hidden="true">
+        <div id="scene23"></div>
+      </section>
+      <section class="scene" aria-label="Keep on swimming" aria-hidden="true">
+        <div id="scene22"></div>
+        <p class="scene-caption">just keep swimming...</p>
+      </section>
+      <section class="scene" aria-label="Sea creatures" aria-hidden="true">
+        <div id="sketch2"></div>
+      </section>
+      <section class="scene" aria-label="You made it" aria-hidden="true">
+        <div id="scene2"></div>
+        <p class="scene-caption">you made it. drink some water!</p>
+      </section>
+    </main>
+
+    <nav class="scene-navigation" aria-label="Scene navigation">
+      <button id="prev-scene" type="button" aria-label="Previous scene">←</button>
+      <span id="scene-count" aria-live="polite">1 / 5</span>
+      <button id="next-scene" type="button" aria-label="Next scene">→</button>
+    </nav>
+
+    <script>
+      const scenes = Array.from(document.querySelectorAll(".scene"));
+      const previousButton = document.getElementById("prev-scene");
+      const nextButton = document.getElementById("next-scene");
+      const sceneCount = document.getElementById("scene-count");
+      let currentScene = 0;
+
+      function showScene(index) {
+        currentScene = Math.max(0, Math.min(index, scenes.length - 1));
+
+        scenes.forEach((scene, sceneIndex) => {
+          const isActive = sceneIndex === currentScene;
+          scene.classList.toggle("is-active", isActive);
+          scene.setAttribute("aria-hidden", String(!isActive));
+        });
+
+        sceneCount.textContent = `${currentScene + 1} / ${scenes.length}`;
+        previousButton.disabled = currentScene === 0;
+        nextButton.disabled = currentScene === scenes.length - 1;
+      }
+
+      previousButton.addEventListener("click", () => showScene(currentScene - 1));
+      nextButton.addEventListener("click", () => showScene(currentScene + 1));
+      document.addEventListener("keydown", (event) => {
+        if (event.altKey || event.ctrlKey || event.metaKey) return;
+        if (event.target instanceof HTMLInputElement || event.target instanceof HTMLButtonElement) return;
+
+        if (event.key === "ArrowLeft") showScene(currentScene - 1);
+        if (event.key === "ArrowRight") showScene(currentScene + 1);
+      });
+
+      showScene(0);
+    </script>
   </body>
-
 </html>

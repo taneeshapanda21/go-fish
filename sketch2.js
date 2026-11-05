@@ -1,60 +1,72 @@
 const s2 = (p) => {
+  // Moire
+    let spacing = 15; 
+    let bubbles = [];
   
-    let spacing = 15; let ray; let fish; let jelly; let buffer;
-    
-    p.preload = () => {
-      ray= p.loadImage('assets/ray.jpg');
-      fish= p.loadImage('assets/fish.jpg');
-      jelly= p.loadImage('assets/jelly.jpg');
-    }
     
     p.setup = () => {
-      const c = p.createCanvas(windowWidth,windowHeight);
+      const c = p.createCanvas(p.windowWidth, p.windowHeight);
       c.parent('sketch2');
-      
+      bubbles = Array.from({ length: 10 }, () => ({
+        x: p.random(-p.width, p.width),
+        y: p.random(p.height),
+        speed: 0.6,
+        size: 100,
+        noiseOffset: p.random(1000)
+      }));
     };
 
     p.draw = () => {
-      p.background(110, 219, 204);
-      buffer = p.createGraphics(350,350);
-      buffer.background(0, 0);
-      buffer.fill(255);
-      buffer.noStroke();
-      buffer.rect(0, 0, 350,350, 100);
+      p.background(130, 158, 200);
       
-      ray.mask(buffer);
-      fish.mask(buffer);
-      jelly.mask(buffer);
+      p.strokeWeight(1);
+      p.stroke(32, 41, 46, 70);
+      const lineSpacing = 10;
+      const swayOne = p.sin(p.frameCount * 0.004) * 12;
+      const swayTwo = p.sin(p.frameCount * 0.004 + p.PI) * 12;
 
-      p.image(ray,width/6,height/4, width/6,width/6)
-      p.image(fish,width/2.4,height/4, width/6,width/6)
-      p.image(jelly,width/1.5,height/4, width/6,width/6)
-
-      for (let y = height / 2; y < height; y += spacing) {
+      for (let x = 0; x < p.width; x += lineSpacing) {
+        p.line(x + swayOne, 0, x + swayOne, p.height);
+        p.line(x + lineSpacing / 2 + swayTwo, 0, x + lineSpacing / 2 + swayTwo, p.height);
+      }
+      for (let y = p.height / 2; y < p.height; y += spacing) {
         p.strokeWeight(2)
-        p.stroke(100, 180, 200, 150);
-        let waveShift = p.sin(frameCount * 0.02 + y * 0.05) * 10;
-        p.line(0, y + waveShift, width, y - waveShift);
-      }
+        p.stroke(110, 219, 204, 150);
+        let waveShift = p.sin(p.frameCount * 0.02 + y * 0.05) * 10;
+        p.line(0, y + waveShift, p.width, y - waveShift);
+     }
       
-      //vertical
-      for (let x = 0; x < width; x += spacing * 3) {
-        p.strokeWeight(100);
-        p.stroke(200, 240, 255, 50);
-        p.line(x, 0, x, height);
-      }
+      p.noStroke();
+      p.fill(255, 255, 255, 120);
+     for (const bubble of bubbles) {
+       bubble.x += bubble.speed;
+       if (bubble.x > p.width + bubble.size) {
+         bubble.x = -bubble.size;
+       }
+       const radius = bubble.size / 2;
+       const noiseTime = p.frameCount * 0.006;
+       p.beginShape();
+       for (let angle = 0; angle < p.TWO_PI; angle += 0.05) {
+         const nx = p.cos(angle) * 0.5 + 1;
+         const ny = p.sin(angle) * 0.5 + 1;
+         const variation = p.map(
+           p.noise(nx + bubble.noiseOffset, ny + bubble.noiseOffset, noiseTime),
+           0,
+           1,
+           -6,
+           6
+         );
+         const x = (radius + variation) * p.cos(angle);
+         const y = (radius + variation) * p.sin(angle);
+         p.vertex(bubble.x + x, bubble.y + y);
+       }
+       p.endShape(p.CLOSE);
+     }
 
-      //bubble
-      for (let i = 0; i < 10; i++) {
-        let bx = (i * 80 + frameCount * 0.5) % width;
-        let by = height - ((frameCount * 0.5 + i * 50) % height);
-        p.fill(255, 255, 255, 120);
-        p.circle(bx, by, 15);
-      }
     }
 
     p.windowResized = () => {
-    p.resizeCanvas(windowWidth, windowHeight);
+    p.resizeCanvas(p.windowWidth, p.windowHeight);
     }
   };
 

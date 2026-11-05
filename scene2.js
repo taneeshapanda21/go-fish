@@ -1,8 +1,9 @@
+// you made it
 const s3 = (p) => {
 let fishes = [];
 let fishx = 100;
 let fishy = 100;
-let colors = ["#00fff3","#ff3300"]
+let colors = ["#8dacdb","#0a0e16"]
 let fun;
 
 p.preload = () => {
@@ -10,14 +11,14 @@ p.preload = () => {
 }
 
 p.setup = () => {
-  const c = p.createCanvas(windowWidth, windowHeight);
+  const c = p.createCanvas(p.windowWidth, p.windowHeight);
   c.parent('scene2');
 }
 
 class Particle {
   constructor() {
-    this.x = p.random(0,width/4);
-    this.y = p.random(0,height);
+    this.x = p.random(0, p.width / 4);
+    this.y = p.random(0, p.height);
     this.vx = p.random(4, 7); // random velocity
     this.alpha = 255; // opacity
     
@@ -54,9 +55,9 @@ class Particle {
 }
 
 p.draw = () => {
-  p.image(fun, 0, 0, width, height);
+  p.image(fun, 0, 0, p.width, p.height);
   
-  if (frameCount % 10 === 0) {   // every 5 frames
+  if (p.frameCount % 10 === 0) {
   fishes.push(new Particle());
 }
   
@@ -72,7 +73,7 @@ p.draw = () => {
   }
 }
 p.windowResized = () => {
-  p.resizeCanvas(windowWidth, windowHeight);
+  p.resizeCanvas(p.windowWidth, p.windowHeight);
 }
 
   };

@@ -1,40 +1,32 @@
 const s5 = (p) => {
-
+// Grid
 let myCanvas;
-let glowIntensity = 0;
-let hueShift = 0;  
 
 p.setup = () => {
-    const c = p.createCanvas(windowWidth,windowHeight);
+    const c = p.createCanvas(p.windowWidth, p.windowHeight);
     c.parent('scene23');
-    p.colorMode(HSB, 360, 100, 100);
+    p.colorMode(p.RGB, 255);
     p.noStroke();
 }
 
 p.draw = () => {
-    p.background(p.lerpColor(p.color(0, 0, 100), p.color(220, 100, 100),
-        (p.sin(frameCount * 0.01) * 0.5 + 0.5)));
-    let t = p.sin(frameCount * 0.01) * 0.5 + 0.5;
-
-    let white = p.color(0, 0, 100);
-    let blue  = p.color(220, 100, 100);
-
-    p.background(p.lerpColor(white, blue, t));
+    const dark = p.color(32, 41, 46);
+    const light = p.color(130, 158, 200);
+    const t = p.sin(p.frameCount * 0.01) * 0.5 + 0.5;
+    p.background(p.lerpColor(dark, light, t));
 
     p.drawGrid();
-    hueShift = (hueShift + 1) % 360;
-    }
+}
 
 p.drawGrid = () => {
-  let cellSize = 40;
-  for (let x = 0; x < width; x += cellSize) {
-    for (let y = 0; y < height; y += cellSize) {
-      let d = dist(x, y, width / 2, height / 2);
-      p.fill(
-        220,
-        100,
-        p.map(p.sin(d * 0.05 + frameCount * 0.02), -1, 1, 20, 100)
-      );
+  const dark = p.color(32, 41, 46);
+  const light = p.color(130, 158, 200);
+  let cellSize = 30;
+  for (let x = 0; x < p.width; x += cellSize) {
+    for (let y = 0; y < p.height; y += cellSize) {
+      let d = p.dist(x, y, p.width / 2, p.height / 2);
+      const t = (p.sin(d * 0.05 + p.frameCount * 0.02) + 1) * 0.5;
+      p.fill(p.lerpColor(dark, light, t));
       p.rect(x, y, cellSize, cellSize);
     }
   }
@@ -44,5 +36,3 @@ p.drawGrid = () => {
 
 
 new p5(s5);
-
-
