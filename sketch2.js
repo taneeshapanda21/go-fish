@@ -11,13 +11,13 @@ const s2 = (p) => {
         x: p.random(-p.width, p.width),
         y: p.random(p.height),
         speed: 0.6,
-        size: 100,
+        size: 30,
         noiseOffset: p.random(1000)
       }));
     };
 
     p.draw = () => {
-      p.background(130, 158, 200);
+      p.background(140, 178, 237);
       
       p.strokeWeight(1);
       p.stroke(32, 41, 46, 70);
@@ -30,12 +30,20 @@ const s2 = (p) => {
         p.line(x + lineSpacing / 2 + swayTwo, 0, x + lineSpacing / 2 + swayTwo, p.height);
       }
       for (let y = p.height / 2; y < p.height; y += spacing) {
-        p.strokeWeight(2)
+        p.strokeWeight(1)
         p.stroke(110, 219, 204, 150);
         let waveShift = p.sin(p.frameCount * 0.02 + y * 0.05) * 10;
         p.line(0, y + waveShift, p.width, y - waveShift);
      }
       
+      const secondWaveOffset = p.sin(p.frameCount * 0.02) * 8;
+      for (let y = p.height / 2; y < p.height; y += spacing) {
+        p.strokeWeight(1);
+        p.stroke(110, 219, 204, 150);
+        const waveShift = p.sin(p.frameCount * 0.02 + y * 0.05) * 10;
+        p.line(0,y + waveShift + secondWaveOffset, p.width,y - waveShift + secondWaveOffset);
+      }
+
       p.noStroke();
       p.fill(255, 255, 255, 120);
      for (const bubble of bubbles) {
@@ -50,19 +58,13 @@ const s2 = (p) => {
          const nx = p.cos(angle) * 0.5 + 1;
          const ny = p.sin(angle) * 0.5 + 1;
          const variation = p.map(
-           p.noise(nx + bubble.noiseOffset, ny + bubble.noiseOffset, noiseTime),
-           0,
-           1,
-           -6,
-           6
-         );
-         const x = (radius + variation) * p.cos(angle);
-         const y = (radius + variation) * p.sin(angle);
-         p.vertex(bubble.x + x, bubble.y + y);
-       }
-       p.endShape(p.CLOSE);
-     }
-
+          p.noise(nx + bubble.noiseOffset, ny + bubble.noiseOffset, noiseTime),0,1,-6,6);
+          const x = (radius + variation) * p.cos(angle);
+          const y = (radius + variation) * p.sin(angle);
+          p.vertex(bubble.x + x, bubble.y + y);
+         }
+        p.endShape(p.CLOSE);
+      }
     }
 
     p.windowResized = () => {
